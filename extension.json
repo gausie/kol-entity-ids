@@ -1,0 +1,28 @@
+{
+	"name": "KolEntityIds",
+	"version": "1.0.0",
+	"author": [ "Sam Gaus" ],
+	"description": "Adds namespaced ID-based redirects for Kingdom of Loathing wiki entities (monsters, items, locations, etc.).",
+	"license-name": "GPL-2.0-or-later",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.40.0",
+		"extensions": {
+			"Cargo": ">= 3.5"
+		}
+	},
+	"callback": "KolEntityIds\\Setup::onRegistration",
+	"AutoloadNamespaces": {
+		"KolEntityIds\\": "includes/"
+	},
+	"Hooks": {
+		"BeforeInitialize": "KolEntityIds\\Hooks::onBeforeInitialize"
+	},
+	"config": {
+		"KolEntityIdTypes": {
+			"value": {},
+			"description": "Map of KoL entity type name to namespace and Cargo configuration. See SETUP.md."
+		}
+	},
+	"manifest_version": 2
+}
