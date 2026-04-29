@@ -61,6 +61,7 @@ class Hooks {
 			return;
 		}
 
+		$output->setPageTitle( $targetTitle->getPrefixedText() );
 		$output->redirect( $targetTitle->getFullURL(), 301 );
 		$output->output();
 		exit;
