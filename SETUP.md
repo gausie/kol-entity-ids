@@ -79,11 +79,21 @@ The format template (e.g. `Combat/meta`) is transcluded by every data page via `
 
 ## 5. Populate Cargo tables from existing pages
 
-After adding `#cargo_declare` to a template:
+After adding `#cargo_declare` to a template, the table will be empty until existing pages are re-parsed. Do one of the following:
 
-1. Go to `Special:CargoRecreateData` on your wiki.
-2. Select the table you just declared (e.g. `Monsters`).
-3. Click **Recreate data** — Cargo will re-parse all pages that transclude the template and populate the table.
+**Via the template page (recommended):**
+1. Navigate to the template page (e.g. `Template:Combat/meta`).
+2. Click the **"Create data"** or **"Recreate data"** tab.
+3. Click **OK** — Cargo queues a re-parse job for every page that transcludes the template.
+4. Run `php maintenance/runJobs.php` if your wiki does not process the job queue automatically.
+
+**Via Special:CargoTables:**
+Administrators can click the **"recreate data"** link next to each table in `Special:CargoTables`.
+
+**Via maintenance script:**
+```bash
+php maintenance/run.php extensions/Cargo/maintenance/cargoRecreateData.php --table Monsters
+```
 
 This only needs to be done once per table. Future page saves update the table automatically.
 
