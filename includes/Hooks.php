@@ -61,7 +61,20 @@ class Hooks {
 			return;
 		}
 
-		$request->response()->header( 'Location: ' . $targetTitle->getFullURL(), true, 301 );
+		$targetUrl = $targetTitle->getFullURL();
+		$titleHtml = htmlspecialchars( $targetTitle->getText(), ENT_QUOTES, 'UTF-8' );
+		$urlHtml = htmlspecialchars( $targetUrl, ENT_QUOTES, 'UTF-8' );
+
+		$request->response()->header( 'Location: ' . $targetUrl, true, 301 );
+		$request->response()->header( 'Content-Type: text/html; charset=UTF-8' );
+
+		// Minimal HTML body so link-preview crawlers (e.g. Discord) read og:title
+		// rather than falling back to the URL. Browsers follow the Location header.
+		echo "<!DOCTYPE html><html><head>" .
+			"<meta property=\"og:title\" content=\"{$titleHtml}\">" .
+			"<meta property=\"og:url\" content=\"{$urlHtml}\">" .
+			"<title>{$titleHtml}</title>" .
+			"</head><body><a href=\"{$urlHtml}\">{$titleHtml}</a></body></html>";
 		exit;
 	}
 }
