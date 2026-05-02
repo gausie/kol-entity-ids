@@ -61,9 +61,7 @@ class Hooks {
 			return;
 		}
 
-		$output->setPageTitle( $targetTitle->getPrefixedText() );
-		$output->redirect( $targetTitle->getFullURL(), 301 );
-		$output->output();
+		$request->response()->header( 'Location: ' . $targetTitle->getFullURL(), true, 301 );
 		exit;
 	}
 }
